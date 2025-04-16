@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to ChatApp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to ChatApp</h1>
+        
+        <div class="auth-buttons">
+            <a href="{{ url_for('login') }}" class="btn">Login</a>
+            <a href="{{ url_for('signup') }}" class="btn">Signup</a>
+        </div>
+
+        <h2>Join a Chat</h2>
+        <div class="chat-sections">
+           
+            <a href="{{ url_for('private_section') }}" class="btn private-chat">Private Chats</a>
+        </div>
+
+        <h2>Public Rooms</h2>
+        <div class="public-rooms">
+            {% for room in public_rooms %}
+            <a href="{{ url_for('join_public_room', room_id=room.id) }}" class="btn public-chat">
+              {{ room.name }} - {{ room.description }}
+          </a>
+          
+            {% endfor %}
+        </div>
+        <div>
+          {% if 'user_id' in session %}
+          <p>Welcome, {{ session['username'] }}! <a href="{{ url_for('logout') }}">Logout</a></p>
+      {% else %}
+          <a href="{{ url_for('login') }}">Login</a>
+      {% endif %}
+        </div>
+    </div>
+</body>
+</html>
